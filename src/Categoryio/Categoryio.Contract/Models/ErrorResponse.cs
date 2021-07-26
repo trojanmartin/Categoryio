@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Categoryio.Api.Models
+namespace Categoryio.Common.Models
 {
     /// <summary>
     /// Error response.

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Categoryio.Api.Database.Models
+namespace Categoryio.Common.Entities
 {
     /// <summary>
     /// Represents room.
@@ -15,7 +15,7 @@ namespace Categoryio.Api.Database.Models
         /// <summary>
         /// Floor number.
         /// </summary>
-        public int Floor { get; set; }
+        public int Floor { get; set; } 
 
         /// <summary>
         /// Door number. 

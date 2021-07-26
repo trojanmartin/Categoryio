@@ -1,4 +1,4 @@
-﻿namespace Categoryio.Api.Database.Models
+﻿namespace Categoryio.Common.Entities
 {
     public class User : BaseEntity
     {
@@ -6,7 +6,7 @@
         /// First name of the user.
         /// </summary>
         public string FirstName { get; set; }
-
+        
         /// <summary>
         /// Last name of the user.
         /// </summary>

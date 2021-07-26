@@ -1,7 +1,7 @@
 ﻿using Categoryio.Api.Database;
 using Categoryio.Api.Database.Models;
-using Categoryio.Api.Models;
 using Categoryio.Api.Requests;
+using Categoryio.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -70,7 +70,7 @@ namespace Categoryio.Api.Controllers
         [ProducesResponseType(statusCode: 200, type: typeof(IEnumerable<CategoryRequest>))]
         [ProducesResponseType(statusCode: 400, type: typeof(ErrorResponse))]
         public async Task<IActionResult> GetCategories()
-        {            
+        {
             return Ok(_dbContext.Categories);
         }
     }

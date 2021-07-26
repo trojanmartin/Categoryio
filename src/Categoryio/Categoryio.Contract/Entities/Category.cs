@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Categoryio.Api.Database.Models
+namespace Categoryio.Common.Entities
 {
     /// <summary>
     /// Definition of the category.
@@ -12,11 +12,11 @@ namespace Categoryio.Api.Database.Models
         /// Name.
         /// </summary>
         public string Name { get; set; }
-
+        
         /// <summary>
         /// When category was created.
         /// </summary>
-        public DateTime Created { get; set; }
+        public DateTime Created { get; set; } 
 
         /// <summary>
         /// Category items.

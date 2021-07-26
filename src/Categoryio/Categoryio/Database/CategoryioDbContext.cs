@@ -26,7 +26,7 @@ namespace Categoryio.Api.Database
 
             modelBuilder.Entity<Item>(x =>
             {
-                x.HasKey(x => x.Id);               
+                x.HasKey(x => x.Id);
             });
 
             modelBuilder.Entity<Room>(x =>

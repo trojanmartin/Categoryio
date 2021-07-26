@@ -1,7 +1,7 @@
 ﻿using Categoryio.Api.Database;
 using Categoryio.Api.Database.Models;
-using Categoryio.Api.Models;
 using Categoryio.Api.Requests;
+using Categoryio.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -60,6 +60,6 @@ namespace Categoryio.Api.Controllers
 
             await _dbContext.SaveChangesAsync();
             return Ok(item);
-        }       
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Categoryio.Api.Models
+﻿namespace Categoryio.Common.Models
 {
     /// <summary>
     /// Validation error.
