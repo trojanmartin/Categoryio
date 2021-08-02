@@ -11,6 +11,35 @@
 
     <Grid>
         <Grid>
+            <Grid.Resources>
+                <DataTemplate x:Key="RowDetailsTemplate">
+                    <StackPanel>
+                        <TextBlock Margin="20" FontSize="20" Text="Detail:" />
+                        <Grid Margin="10, 0,10, 0" Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Text="Name: " FontWeight="SemiBold" FontSize="13" />
+                            <TextBlock Grid.Row="1" Text="Description: " FontWeight="SemiBold" FontSize="13" />
+                            <TextBlock Grid.Row="2" Text="Created: " FontWeight="SemiBold" FontSize="13" />
+                            <TextBlock Grid.Row="3" Text="User:" FontWeight="SemiBold" FontSize="13" />
+                            <TextBlock Grid.Column="1" FontSize="13" Text="{Binding Name}" HorizontalAlignment="Left" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" FontSize="13" Text="{Binding Description}" HorizontalAlignment="Left" />
+                            <TextBlock Grid.Row="2" Grid.Column="1" FontSize="13" Text="{Binding Created}" HorizontalAlignment="Left" />
+                            <TextBlock Grid.Row="3" Grid.Column="1" FontSize="13" Text="Super pouzivatel" HorizontalAlignment="Left" />
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </Grid.Resources>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
@@ -25,6 +54,7 @@
             <Grid Grid.Row="1">
                 <controls:ListDetailsView BackButtonBehavior="Automatic"
                                     ItemsSource="{Binding Categories}"
+                                    SelectedItem="{Binding SelectedCategory}"
                                     NoSelectionContent="Vyberte požadovanú kategóriu."
                                     CompactModeThresholdWidth="720">
                     <controls:ListDetailsView.ItemTemplate>
@@ -39,8 +69,8 @@
                                     <TextBlock Text="{Binding Name}" Style="{ThemeResource TitleTextBlockStyle}" Foreground="{ThemeResource TextBoxForegroundThemeBrush}" />
                                     <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource TextBoxButtonForegroundThemeBrush}">
                                         <Run Text="Počet položiek:" />
-                                        <Run Text="{Binding SelectedCategory.Items.Count, FallbackValue=5}" FontFamily="{ThemeResource ContentControlThemeFontFamily}"/>
-                                    </TextBlock>                                   
+                                        <Run Text="{Binding Items.Count, FallbackValue=0}" FontWeight="SemiBold" FontFamily="{ThemeResource ContentControlThemeFontFamily}"/>
+                                    </TextBlock>
 
                                 </StackPanel>
                             </Grid>
@@ -50,23 +80,34 @@
                         <DataTemplate>
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="2*"/>
-                                    <RowDefinition Height="5*"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-
-                                <Grid Grid.Row="0" x:Name="Filter" Margin="10">
-                                    <TextBlock Text="adasd"/>    
-                                </Grid>
-
+                                <StackPanel Orientation="Horizontal" Margin="12">
+                                    <AppBarButton Icon="Filter" Label="Filter by">
+                                        <AppBarButton.Flyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem x:Name="rankLow" Text="Rank &lt; 50" />
+                                                <MenuFlyoutItem x:Name="rankHigh" Text="Rank &gt; 50" />
+                                                <MenuFlyoutSeparator />
+                                                <MenuFlyoutItem x:Name="heightLow" Text="Height &lt; 8000ft" />
+                                                <MenuFlyoutItem x:Name="heightHigh" Text="Height &gt; 8000ft" />
+                                                <MenuFlyoutSeparator />
+                                                <MenuFlyoutItem x:Name="clearFilter" Text="Remove Filter" />
+                                            </MenuFlyout>
+                                        </AppBarButton.Flyout>
+                                    </AppBarButton>
+                                </StackPanel>
                                 <controls:DataGrid
-                                      Grid.Row="1"
-                                        x:Name="dataGrid"
+                                       Grid.Row="1"
+                                        x:Name="dataGrid"                                       
                                         Margin="12"
+                                        ItemsSource="{Binding Items}"
                                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                         HorizontalScrollBarVisibility="Visible"
                                         VerticalScrollBarVisibility="Visible"
                                         AlternatingRowBackground="Transparent"
-                                        AlternatingRowForeground="Green"
+                                        AlternatingRowForeground="Gray"
                                         AreRowDetailsFrozen="False"
                                         AreRowGroupHeadersFrozen="True"
                                         AutoGenerateColumns="False"
@@ -83,17 +124,13 @@
                                         RowDetailsVisibilityMode="VisibleWhenSelected"
                                         SelectionMode="Single"
                                         RowGroupHeaderPropertyNameAlternative="Range">
-                                      <controls:DataGrid.Columns>
-                                        <controls:DataGridTextColumn Header="Rank" Binding="{Binding Rank}" Tag="Rank" />
-                                        <controls:DataGridComboBoxColumn Header="Mountain" Binding="{Binding Mountain}" Tag="Mountain" />
-                                        <controls:DataGridTextColumn Header="Height (m)" Binding="{Binding Height_m}" Tag="Height_m" />
-                                        <controls:DataGridTextColumn Header="Range" Binding="{Binding Range}" Tag="Range" />
-                                        <controls:DataGridTextColumn Header="Parent Mountain" Binding="{Binding Parent_mountain}" Tag="Parent_mountain" />
-                                      </controls:DataGrid.Columns>
+                                    <controls:DataGrid.Columns>
+                                        <controls:DataGridTextColumn Header="Id" Binding="{Binding Id}" Tag="Id" />
+                                        <controls:DataGridTextColumn Header="Name" Binding="{Binding Name}" Tag="Name" />
+                                        <controls:DataGridComboBoxColumn Header="Description" Binding="{Binding Description}" Tag="Description" />
+                                        <controls:DataGridTextColumn Header="Created" Binding="{Binding Created}" Tag="Created" />
+                                    </controls:DataGrid.Columns>
                                 </controls:DataGrid>
-                                
-                                                                
-
                             </Grid>
                         </DataTemplate>
                     </controls:ListDetailsView.DetailsTemplate>
@@ -117,22 +154,18 @@
                     </controls:ListDetailsView.NoSelectionContentTemplate>
                     <controls:ListDetailsView.ListCommandBar>
                         <CommandBar>
-                            <AppBarButton Icon="Back" Label="Back"/>
-                            <AppBarButton Icon="Forward" Label="Forward"/>
-
+                            <AppBarButton Icon="Add" Label="Pridaj kategóriu"/>
                             <CommandBar.Content>
                                 <TextBlock Margin="12,14">
-              <Run Text="{Binding Categories.Count}" />
-              <Run Text="Categories" />
+                                  <Run Text="{Binding Categories.Count}" />
+                                  <Run Text="dostupné kategórie" />     
                                 </TextBlock>
                             </CommandBar.Content>
                         </CommandBar>
                     </controls:ListDetailsView.ListCommandBar>
                     <controls:ListDetailsView.DetailsCommandBar>
                         <CommandBar>
-                            <AppBarButton Icon="MailReply" Label="Reply" />
-                            <AppBarButton Icon="MailReplyAll" Label="Reply All" />
-                            <AppBarButton Icon="MailForward" Label="Forward" />
+                            <AppBarButton Icon="Add" Label="Pridaj položku" />
                         </CommandBar>
                     </controls:ListDetailsView.DetailsCommandBar>
                 </controls:ListDetailsView>
