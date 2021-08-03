@@ -1,4 +1,5 @@
-﻿using Categoryio.Destkop.Services.Navigation;
+﻿using Categoryio.Destkop.IoC;
+using Categoryio.Destkop.Services.Navigation;
 using Categoryio.Destkop.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -29,7 +30,7 @@ namespace Categoryio.Destkop
         {
             this.InitializeComponent();            
             var rootFrame = Content as Frame;
-            var navigationService = new NavigationService();
+            var navigationService = DIHelper.Resolve<INavigationService>();
             navigationService.InitializeFrame(rootFrame);
         }
     }

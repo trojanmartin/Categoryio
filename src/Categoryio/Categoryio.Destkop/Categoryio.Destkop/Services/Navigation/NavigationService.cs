@@ -1,4 +1,5 @@
 ﻿using Categoryio.Destkop.Base;
+using Categoryio.Destkop.Pages;
 using Categoryio.Destkop.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -15,7 +16,7 @@ namespace Categoryio.Destkop.Services.Navigation
         public void InitializeFrame(Frame rootFrame)
         {
             _shellFrame = rootFrame;
-            NavigateTo<MainViewModel>();
+            NavigateTo<ShellViewModel>();
         }
 
         public void NavigateTo<T>() where T : BaseViewModel
@@ -37,6 +38,17 @@ namespace Categoryio.Destkop.Services.Navigation
         {
             var pageType = GetPageTypeForViewModel(viewModelType);
             _shellFrame?.Navigate(pageType, parameter);
+
+            var content = _shellFrame.Content;
+            if (content is ShellPage shellPage)
+            {
+                var navigationView = (shellPage.Content as Panel).Children.OfType<NavigationView>().First();
+                var navFrame = (navigationView.Content as Panel).Children.OfType<Frame>().First();
+                _shellFrame = navFrame;
+
+                // navigate to book flight viewmodel
+                NavigateTo<MainViewModel>();
+            }
         }
 
         private Type GetPageTypeForViewModel(Type viewModelType)

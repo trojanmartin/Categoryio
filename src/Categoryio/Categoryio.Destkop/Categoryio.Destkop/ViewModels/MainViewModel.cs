@@ -37,7 +37,7 @@ namespace Categoryio.Destkop.ViewModels
                         },
                         new Item()
                         {
-                            Id = 3,
+                            Id = 3, 
                             Name = "Pingpong hra",
                             Description = "pre 5 deti, super tazke",
                             Created = System.DateTime.Now.AddDays(5)
