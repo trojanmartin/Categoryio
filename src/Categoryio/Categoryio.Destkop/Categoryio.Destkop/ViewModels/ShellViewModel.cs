@@ -24,7 +24,6 @@ namespace Categoryio.Destkop.ViewModels
             _menuItems = new ObservableCollection<MenuItem>();
 
             _menuItems.Add(new MenuItem { Name = "Hlavná obrazovka", Icon = "\uE709", ViewModelType = nameof(MainViewModel) });
-            _menuItems.Add(new MenuItem { Name = "Kategórie", Icon = "\uE721", ViewModelType = nameof(CategoryViewModel) });
             _menuItems.Add(new MenuItem { Name = "Položky", Icon = "\uE721", ViewModelType = nameof(ItemViewModel) });
         }
 
@@ -34,9 +33,6 @@ namespace Categoryio.Destkop.ViewModels
             {
                 case nameof(MainViewModel):
                     _navigationService.NavigateTo<MainViewModel>();
-                    break;
-                case nameof(CategoryViewModel):
-                    _navigationService.NavigateTo<CategoryViewModel>();
                     break;
                 case nameof(ItemViewModel):
                     _navigationService.NavigateTo<ItemViewModel>();

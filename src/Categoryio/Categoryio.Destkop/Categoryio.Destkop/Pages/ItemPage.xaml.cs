@@ -1,4 +1,7 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using Categoryio.Destkop.IoC;
+using Categoryio.Destkop.ViewModels;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -10,12 +13,18 @@ namespace Categoryio.Destkop.Pages
     /// </summary>
     public sealed partial class ItemPage : Page
     {
-       
+        public ItemViewModel ViewModel { get; set; }
+        
         public ItemPage()
+        {            
+            this.InitializeComponent();            
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            
-            this.InitializeComponent();
-           
+            base.OnNavigatedTo(e);
+            ViewModel = DIHelper.Resolve<ItemViewModel>();
+            this.DataContext = ViewModel;
         }
     }
 }

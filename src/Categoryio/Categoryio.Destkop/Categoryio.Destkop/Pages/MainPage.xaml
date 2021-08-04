@@ -43,21 +43,30 @@
             <Grid>
                 <controls:ListDetailsView BackButtonBehavior="Automatic"
                                     ItemsSource="{Binding Categories}"
-                                    SelectedItem="{Binding SelectedCategory}"
+                                    SelectedItem="{Binding SelectedCategory}"     
+                                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                                     NoSelectionContent="Vyberte požadovanú kategóriu."
                                     CompactModeThresholdWidth="720"
+                                    BorderBrush="{ThemeResource AppBarBorderThemeBrush}"
                                     ListHeader="Kategrorie">
                     <controls:ListDetailsView.ListHeaderTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <StackPanel Margin="15" Orientation="Horizontal">
-                                    <TextBlock Text="Kategorie" Style="{ThemeResource HeaderTextBlockStyle}"/>
-                                    <AppBarButton Icon="Add"/>
+                                <StackPanel Margin="10 10 10 30" 
+                                            Orientation="Vertical">
+                                    <TextBlock Margin="15" 
+                                               Text="Kategórie" 
+                                               Style="{ThemeResource HeaderTextBlockStyle}"/>
+
+                                    <TextBox PlaceholderText="Vyhľadávanie" 
+                                             Style="{ThemeResource ComboBoxTextBoxStyle}"
+                                             BorderThickness="1"
+                                             />
                                 </StackPanel>
 
                             </Grid>
@@ -65,7 +74,7 @@
                     </controls:ListDetailsView.ListHeaderTemplate>
                     <controls:ListDetailsView.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="2*"/>
                                     <RowDefinition Height="*"/>
@@ -73,7 +82,7 @@
 
                                 <StackPanel Margin="0,8">
                                     <TextBlock Text="{Binding Name}" Style="{ThemeResource TitleTextBlockStyle}" Foreground="{ThemeResource TextBoxForegroundThemeBrush}" />
-                                    <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource TextBoxButtonForegroundThemeBrush}">
+                                    <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Foreground="{ThemeResource TextBoxButtonForegroundThemeBrush}">
                                         <Run Text="Počet položiek:" />
                                         <Run Text="{Binding Items.Count, FallbackValue=0}" FontWeight="SemiBold" FontFamily="{ThemeResource ContentControlThemeFontFamily}"/>
                                     </TextBlock>
@@ -84,7 +93,7 @@
                     </controls:ListDetailsView.ItemTemplate>
                     <controls:ListDetailsView.DetailsTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Background="White">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="*"/>
@@ -156,7 +165,7 @@
                     </controls:ListDetailsView.ListCommandBar>
                     <controls:ListDetailsView.DetailsCommandBar>
                         <CommandBar>
-                            <AppBarButton Icon="Add" Label="Pridaj položku" />
+                            <AppBarButton Icon="Add" Label="Pridaj položku" Command="{Binding NewItemCommand}" />
                         </CommandBar>
                     </controls:ListDetailsView.DetailsCommandBar>
                 </controls:ListDetailsView>

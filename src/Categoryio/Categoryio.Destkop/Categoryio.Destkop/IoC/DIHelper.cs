@@ -14,6 +14,7 @@ namespace Categoryio.Destkop.IoC
 
             // View models - by default, TinyIoC will register concrete classes as multi-instance.
             _container.Register<MainViewModel>();
+            _container.Register<ItemViewModel>();
 
             // Services - by default, TinyIoC will register interface registrations as singletons.
             _container.Register<INavigationService, NavigationService>();

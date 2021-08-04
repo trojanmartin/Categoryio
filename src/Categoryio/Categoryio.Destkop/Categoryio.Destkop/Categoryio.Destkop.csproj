@@ -10,7 +10,6 @@
     <UseWinUI>true</UseWinUI>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Pages\CategoryPage.xaml" />
     <None Remove="Pages\ItemPage.xaml" />
     <None Remove="Pages\MainPage.xaml" />
     <None Remove="Pages\ShellPage.xaml" />
@@ -33,15 +32,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Pages\ItemPage.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Pages\ShellPage.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\CategoryPage.xaml">
+    <Page Update="Pages\ItemPage.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

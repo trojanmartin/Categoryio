@@ -1,4 +1,5 @@
 ﻿using Categoryio.Common.Entities;
+using Categoryio.Destkop.IoC;
 using Categoryio.Destkop.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -15,6 +16,7 @@ namespace Categoryio.Destkop.Pages
     /// </summary>
     public sealed partial class MainPage : Page
     {
+
         public List<Category> Categories { get; set; }
         public MainPage()
         {
@@ -37,7 +39,7 @@ namespace Categoryio.Destkop.Pages
                 }
             };
             this.InitializeComponent();
-            this.DataContext = new MainViewModel();
+            this.DataContext = DIHelper.Resolve<MainViewModel>();
         }
     }
 }
