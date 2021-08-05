@@ -1,12 +1,20 @@
 ﻿using Categoryio.Common.Entities;
 using Categoryio.Destkop.Base;
+using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace Categoryio.Destkop.ViewModels
 {
     public class ItemViewModel : BaseViewModel
     {
+        public ICommand AddItemCommand => new RelayParametrizedCommand<Item>((item) => AddItem(item));
+
         public List<Item> Items { get; set; }
+        public Item CurrentItem { get;set; }       
+
+        public bool IsCurrentEditable { get; set; }
+
         public ItemViewModel()
         {
             Items = new List<Item>()
@@ -54,6 +62,11 @@ namespace Categoryio.Destkop.ViewModels
                         Created = System.DateTime.Now.AddDays(5)
                     }
             };
+        }
+
+        private void AddItem(Item item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

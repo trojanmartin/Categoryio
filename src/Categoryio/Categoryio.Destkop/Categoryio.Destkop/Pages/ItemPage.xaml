@@ -9,99 +9,69 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>        
-        <Grid>
-            <controls:ListDetailsView BackButtonBehavior="Automatic"
-                                    ItemsSource="{Binding Items}"
-                                    SelectedItem="{Binding SelectedCategory}"     
-                                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                                    NoSelectionContent="Vyberte požadovanú kategóriu."
-                                    CompactModeThresholdWidth="720"
-                                    BorderBrush="{ThemeResource AppBarBorderThemeBrush}"
-                                    ListHeader="Kategrorie">
-                <controls:ListDetailsView.ListHeaderTemplate>
-                    <DataTemplate>
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <StackPanel Margin="10 10 10 30" 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="320"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <DataTemplate x:Key="ItemDetailTemplate">
+                <Grid Margin="20 0"
+                              Padding="20">
+                    <StackPanel HorizontalAlignment="Left"
+                                    VerticalAlignment="Center">
+                        <TextBlock Text="Nová položka" Style="{StaticResource TitleTextBlockStyle}"/>
+                        <Button Height="100" Width="100" Background="LightGray" Content="Obrázok" Margin="0,24"/>
+                        <TextBox x:Name="Name" Header= "Názov" Text="{Binding Name}" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" InputScope="PersonalFullName"/>
+                        <TextBox x:Name="Description" Header="Popis" Text="{Binding Description}" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber" />
+                        <ComboBox Header="Kategória" IsEnabled="True" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left">
+                            <x:String>Test1</x:String>
+                            <x:String>Test2</x:String>
+                            <x:String>Test1</x:String>
+                            <x:String>Test1</x:String>
+                        </ComboBox>
+                        <ComboBox Header="Miestnosť" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left">
+                            <x:String>Test1</x:String>
+                            <x:String>Test2</x:String>
+                            <x:String>Test1</x:String>
+                            <x:String>Test1</x:String>
+                        </ComboBox>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Pridať" Command="{Binding AddItemCommand}" Margin="0,24" />
+                            <Button Content="Cancel" Margin="24"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+        </Grid.Resources>
+        <Grid BorderBrush="{ThemeResource AppBarBackgroundThemeBrush}"
+              BorderThickness="0 0 1 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel Margin="10 10 10 30" 
                                             Orientation="Vertical">
-                                <TextBlock Margin="15" 
+                    <TextBlock Margin="15" 
                                                Text="Položky" 
                                                Style="{ThemeResource HeaderTextBlockStyle}"/>
 
-                                <TextBox PlaceholderText="Vyhľadávanie" 
+                    <TextBox PlaceholderText="Vyhľadávanie" 
+                                             Margin="10"
                                              Style="{ThemeResource ComboBoxTextBoxStyle}"
                                              BorderThickness="1"
                                              />
-                            </StackPanel>
+                </StackPanel>
+            </Grid>
 
-                        </Grid>
-                    </DataTemplate>
-                </controls:ListDetailsView.ListHeaderTemplate>
-                <controls:ListDetailsView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="2*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
 
-                            <StackPanel Margin="0,8">
-                                <TextBlock Text="{Binding Name}" Style="{ThemeResource TitleTextBlockStyle}" Foreground="{ThemeResource TextBoxForegroundThemeBrush}" />
-                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" 
-                                           Text="{Binding Description}" 
-                                           TextWrapping="WrapWholeWords"
-                                           Foreground="{ThemeResource TextBoxButtonForegroundThemeBrush}" />
-
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </controls:ListDetailsView.ItemTemplate>                
-                <controls:ListDetailsView.NoSelectionContentTemplate>
-                    <DataTemplate>
-                        <Grid Margin="20 0"
-                              Padding="20">
-                            <StackPanel HorizontalAlignment="Left"
-                                    VerticalAlignment="Center">
-                                <TextBlock Text="Nová položka" Style="{StaticResource TitleTextBlockStyle}"/>
-                                <Button Height="100" Width="100" Background="LightGray" Content="Obrázok" Margin="0,24"/>
-                                <TextBox x:Name="Name" Header= "Názov" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" InputScope="PersonalFullName"/>
-                                <TextBox x:Name="Description" Header="Popis" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber" />
-                                <ComboBox Header="Kategória" IsEnabled="True" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left">
-                                    <x:String>Test1</x:String> 
-                                    <x:String>Test2</x:String> 
-                                    <x:String>Test1</x:String> 
-                                    <x:String>Test1</x:String> 
-                                </ComboBox>
-                                <ComboBox Header="Miestnosť" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left">
-                                    <x:String>Test1</x:String>
-                                    <x:String>Test2</x:String>
-                                    <x:String>Test1</x:String>
-                                    <x:String>Test1</x:String>
-                                </ComboBox>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Content="Pridať" Margin="0,24" />
-                                    <Button Content="Cancel" Margin="24"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </controls:ListDetailsView.NoSelectionContentTemplate>
-                <controls:ListDetailsView.ListCommandBar>
-                    <CommandBar>                       
-                        <CommandBar.Content>
-                            <TextBlock Margin="12,14">
-                                  <Run Text="{Binding Items.Count}" />
-                                  <Run Text="Položiek" />
-                            </TextBlock>
-                        </CommandBar.Content>
-                    </CommandBar>
-                </controls:ListDetailsView.ListCommandBar>
-            </controls:ListDetailsView>
+            <ListView Grid.Row="1">
+                <x:String>Test1</x:String>
+                <x:String>Test2</x:String>
+                <x:String>Test1</x:String>
+                <x:String>Test1</x:String>
+            </ListView>
         </Grid>
     </Grid>
 </Page>
