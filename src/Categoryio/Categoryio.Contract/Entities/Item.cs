@@ -28,6 +28,8 @@ namespace Categoryio.Common.Entities
         /// </summary>
         public DateTime Created { get; set; }
 
+        public Category Category { get; set; }  
+
         /// <summary>
         /// Category of the item.
         /// </summary>

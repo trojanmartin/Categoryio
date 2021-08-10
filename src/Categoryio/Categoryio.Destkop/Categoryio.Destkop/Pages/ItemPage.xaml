@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Categoryio.Destkop.Pages"
+    xmlns:converters="using:Categoryio.Destkop.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -10,40 +11,13 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.Resources>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibiltyConverter" />
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="320"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid.Resources>
-            <DataTemplate x:Key="ItemDetailTemplate">
-                <Grid Margin="20 0"
-                              Padding="20">
-                    <StackPanel HorizontalAlignment="Left"
-                                    VerticalAlignment="Center">
-                        <TextBlock Text="Nová položka" Style="{StaticResource TitleTextBlockStyle}"/>
-                        <Button Height="100" Width="100" Background="LightGray" Content="Obrázok" Margin="0,24"/>
-                        <TextBox x:Name="Name" Header= "Názov" Text="{Binding Name}" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" InputScope="PersonalFullName"/>
-                        <TextBox x:Name="Description" Header="Popis" Text="{Binding Description}" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber" />
-                        <ComboBox Header="Kategória" IsEnabled="True" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left">
-                            <x:String>Test1</x:String>
-                            <x:String>Test2</x:String>
-                            <x:String>Test1</x:String>
-                            <x:String>Test1</x:String>
-                        </ComboBox>
-                        <ComboBox Header="Miestnosť" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left">
-                            <x:String>Test1</x:String>
-                            <x:String>Test2</x:String>
-                            <x:String>Test1</x:String>
-                            <x:String>Test1</x:String>
-                        </ComboBox>
-                        <StackPanel Orientation="Horizontal">
-                            <Button Content="Pridať" Command="{Binding AddItemCommand}" Margin="0,24" />
-                            <Button Content="Cancel" Margin="24"/>
-                        </StackPanel>
-                    </StackPanel>
-                </Grid>
-            </DataTemplate>
-        </Grid.Resources>
         <Grid BorderBrush="{ThemeResource AppBarBackgroundThemeBrush}"
               BorderThickness="0 0 1 0">
             <Grid.RowDefinitions>
@@ -52,26 +26,70 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <StackPanel Margin="10 10 10 30" 
-                                            Orientation="Vertical">
+                            Orientation="Vertical">
                     <TextBlock Margin="15" 
-                                               Text="Položky" 
-                                               Style="{ThemeResource HeaderTextBlockStyle}"/>
+                               Text="Položky" 
+                               Style="{ThemeResource HeaderTextBlockStyle}"/>
 
                     <TextBox PlaceholderText="Vyhľadávanie" 
-                                             Margin="10"
-                                             Style="{ThemeResource ComboBoxTextBoxStyle}"
-                                             BorderThickness="1"
-                                             />
+                             Margin="10"
+                             Style="{ThemeResource ComboBoxTextBoxStyle}"
+                             BorderThickness="1"/>
                 </StackPanel>
             </Grid>
 
-
-            <ListView Grid.Row="1">
-                <x:String>Test1</x:String>
-                <x:String>Test2</x:String>
-                <x:String>Test1</x:String>
-                <x:String>Test1</x:String>
+            <ListView Grid.Row="1"
+                      ItemsSource="{Binding Items}"
+                      SelectedItem="{Binding CurrentItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.FooterTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <CommandBar>
+                                <AppBarButton Icon="Add" Label="Pridaj položku" Command="{Binding AddItemCommand}" />
+                            </CommandBar>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.FooterTemplate>
             </ListView>
         </Grid>
+
+        <Grid Margin="20 0"
+              Padding="20" Grid.Column="1">
+            <StackPanel HorizontalAlignment="Left">
+                <TextBlock Text="Nová položka" Style="{StaticResource TitleTextBlockStyle}"/>
+                <Button Height="100" Width="100" Background="LightGray" Content="Obrázok" Margin="0,24"/>
+                <TextBox x:Name="Name" Header= "Názov" Text="{Binding CurrentItem.Name, Mode=TwoWay}" IsEnabled="{Binding IsCurrentEditable}" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" InputScope="PersonalFullName"/>
+                <TextBox x:Name="Description" Header="Popis" Text="{Binding CurrentItem.Description, Mode=TwoWay}" IsEnabled="{Binding IsCurrentEditable}" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber" />
+                <ComboBox Header="Kategória" SelectedItem="{Binding CurrentItem.Category, Mode=TwoWay}" IsEnabled="{Binding IsCurrentEditable}" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left" 
+                          ItemsSource="{Binding Categories}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ComboBox Header="Miestnosť" IsEnabled="{Binding IsCurrentEditable}" Margin="0,24,0,0" Width="400" HorizontalAlignment="Left">
+                    <x:String>Testsdsd1</x:String>
+                    <x:String>Test2</x:String>
+                    <x:String>Test1</x:String>
+                    <x:String>Test1</x:String>
+                </ComboBox>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Upraviť" Visibility="{Binding IsCurrentEditable, Converter={StaticResource BoolToVisibiltyConverter}, ConverterParameter=reverse}" Command="{Binding EditItemCommand}" Margin="0,24" />
+                    <Button Content="Potvrdit" Visibility="{Binding IsCurrentEditable, Converter={StaticResource BoolToVisibiltyConverter}}" Command="{Binding ConfirmItemCommand}" Margin="0,24" />
+                    <Button Content="Cancel" Command="{Binding CancelEditCommand}" Margin="24"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        
     </Grid>
 </Page>

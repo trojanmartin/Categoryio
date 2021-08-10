@@ -22,5 +22,10 @@ namespace Categoryio.Common.Entities
         /// Category items.
         /// </summary>
         public ICollection<Item> Items { get; set; }
+
+        /// <summary>
+        /// Theme of the category.
+        /// </summary>
+        public Theme Theme { get; set; }
     }
 }

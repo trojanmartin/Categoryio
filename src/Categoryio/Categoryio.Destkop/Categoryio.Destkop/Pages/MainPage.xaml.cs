@@ -24,17 +24,17 @@ namespace Categoryio.Destkop.Pages
             {
                 new Category()
                 {
-                    Name = "Animals",
+                    Name = "Jazyk a komunikácia",
                     Created = System.DateTime.Now
                 },
                 new Category()
                 {
-                    Name = "World",
+                    Name = "Matematika a práca s infotmáciami",
                     Created = System.DateTime.Now
                 },
                 new Category()
                 {
-                    Name = "Languages",
+                    Name = "Človek a príroda",
                     Created = System.DateTime.Now
                 }
             };

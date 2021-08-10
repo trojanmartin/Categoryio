@@ -1,23 +1,48 @@
 ﻿using Categoryio.Common.Entities;
 using Categoryio.Destkop.Base;
-using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace Categoryio.Destkop.ViewModels
 {
     public class ItemViewModel : BaseViewModel
     {
-        public ICommand AddItemCommand => new RelayParametrizedCommand<Item>((item) => AddItem(item));
+        public ICommand AddItemCommand => new RelayCommand(() => AddItem());
+        public ICommand ConfirmItemCommand => new RelayCommand(() => ConfirmItem());
+        public ICommand EditItemCommand => new RelayCommand(() => IsCurrentEditable = true);
+        public ICommand CancelEditCommand => new RelayCommand(() => IsCurrentEditable = false);
+        public ObservableCollection<Item> Items { get; set; }
+        public ObservableCollection<Category> Categories { get; set; } = new ObservableCollection<Category>()
+        {
+            new Category()
+            {
+                Name = "test category"
+            }
+        };
 
-        public List<Item> Items { get; set; }
-        public Item CurrentItem { get;set; }       
 
-        public bool IsCurrentEditable { get; set; }
+        public bool IsSelected => CurrentItem is not null;
+
+        private Item _curentItem;
+        public Item CurrentItem
+        {
+            get => _curentItem;
+
+            set
+            {
+                _curentItem = value;
+                IsCurrentEditable = false;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isCurrentEditable = false;
+        public bool IsCurrentEditable { get => _isCurrentEditable; set { _isCurrentEditable = value; OnPropertyChanged(); } }
 
         public ItemViewModel()
         {
-            Items = new List<Item>()
+            Items = new ObservableCollection<Item>()
                 {
                     new Item()
                     {
@@ -64,9 +89,26 @@ namespace Categoryio.Destkop.ViewModels
             };
         }
 
-        private void AddItem(Item item)
+        private void AddItem()
         {
-            throw new NotImplementedException();
+            CurrentItem = new Item();
+            IsCurrentEditable = true;
+        }
+
+        private void ConfirmItem()
+        {
+            if (CurrentItem.Id == default)
+            {
+                Items.Add(CurrentItem);
+            }
+            else
+            {
+                Items.Remove(Items.FirstOrDefault(x => x.Id == CurrentItem.Id));
+                Items.Add(CurrentItem);
+            }
+
+            CurrentItem = Items.FirstOrDefault(x => x.Id == CurrentItem.Id);
+            IsCurrentEditable = false;
         }
     }
 }
